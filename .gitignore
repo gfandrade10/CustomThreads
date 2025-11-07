@@ -1,0 +1,9 @@
+# Folders
+build/
+.cache/
+lib/
+
+# Local executables and other config files
+CCApp
+CMakeUserPresets.json
+.clangd

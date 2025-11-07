@@ -1,0 +1,7 @@
+[requires]
+fmt/12.1.0
+llvm-openmp/20.1.6
+
+[generators]
+CMakeDeps
+CMakeToolchain
