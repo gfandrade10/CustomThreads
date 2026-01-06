@@ -1,6 +1,8 @@
 [requires]
 fmt/12.1.0
 llvm-openmp/20.1.6
+pcg-cpp/cci.20220409
+xoshiro-cpp/1.1
 
 [generators]
 CMakeDeps

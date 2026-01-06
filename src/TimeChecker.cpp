@@ -34,11 +34,10 @@ namespace TimeChecker
         std::vector<int> vec;
         vec.reserve(N);
         std::mt19937 seed(rd_s());
-        std::uniform_int_distribution<int> gen(0,100);
         std::uniform_int_distribution<int> last_pick(0, N-1);
 
         for(size_t i = 0; i < N; ++i)
-            vec.push_back(gen(seed));
+            vec.push_back(seed() % 101);
 
         for(size_t i = 0; i < N; ++i)
             vec[i] *= vec[i];
@@ -55,11 +54,10 @@ namespace TimeChecker
         #pragma omp parallel
         {
             std::mt19937 seed(rd_s() + omp_get_thread_num());
-            std::uniform_int_distribution<int> gen(0,100);
             
             #pragma omp for
             for(size_t i = 0; i < N; ++i)
-                vec[i] = gen(seed);
+                vec[i] = seed() % 101;
         }
 
         //Second OMP Block
@@ -97,9 +95,8 @@ namespace TimeChecker
         auto thread_arr_gen = [&vec, &mem_blocks](size_t id) ->void 
         {
             std::mt19937 seed(rd_s() + id);
-            std::uniform_int_distribution<int> gen(0,100);
             for(size_t i = mem_blocks[id].first; i < mem_blocks[id].second; ++i)
-                vec[i] = gen(seed);
+                vec[i] = seed() % 101;
         };
 
         auto thread_arr_sqr = [&vec, &mem_blocks](size_t id) ->void 
@@ -114,14 +111,14 @@ namespace TimeChecker
 
         //arr gen
         for(size_t i = 0; i < num_of_threads; ++i)
-            threads_gen.emplace_back(std::thread(thread_arr_gen, i));
+            threads_gen.emplace_back(thread_arr_gen, i);
 
         for(size_t i = 0; i < num_of_threads; ++i)
             threads_gen[i].join();
 
         //arr square
         for(size_t i = 0; i < num_of_threads; ++i)
-            threads_sqr.emplace_back(std::thread(thread_arr_sqr, i));
+            threads_sqr.emplace_back(thread_arr_sqr, i);
 
         for(size_t i = 0; i < num_of_threads; ++i)
             threads_sqr[i].join();
