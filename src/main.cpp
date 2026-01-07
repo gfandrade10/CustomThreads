@@ -1,7 +1,6 @@
 
 //C++ std headers
 #include <cstddef>
-#include <type_traits>
 
 //2rd Party Libs
 #include <fmt/base.h>
@@ -10,19 +9,6 @@
 //My Libs
 #include "TimeChecker.h"
 #include "pcg.h"
-
-template<typename Callable>
-std::enable_if_t<std::is_same_v<std::invoke_result_t<Callable, size_t>, void>, float>
-CalcAverage(Callable&& f, size_t num)
-{
-    constexpr size_t runs = 10;
-    float sum = 0.0f;
-
-    for(size_t i = 0; i < runs; ++i)
-        sum += TimeChecker::ElapsedTime(f,num);
-
-    return sum/static_cast<float>(runs);
-}
 
 int main()
 {

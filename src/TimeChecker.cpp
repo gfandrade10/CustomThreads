@@ -1,7 +1,5 @@
 //CXX Libs
 #include <random>
-#include <chrono>
-#include <functional>
 #include <cstddef>
 #include <random>
 #include <thread>
@@ -18,16 +16,6 @@
 namespace TimeChecker
 {
     static std::random_device rd_s;
-
-    float ElapsedTime(std::function<void(size_t)> func, size_t NofArgs)
-    {
-        auto Start = std::chrono::steady_clock::now();
-        std::invoke(func, NofArgs);
-        auto End = std::chrono::steady_clock::now();
-        
-        long Duration = std::chrono::duration_cast<std::chrono::microseconds>(End-Start).count();
-        return Duration/1000.0f;
-    }
 
     void FillArrayUnoptimized(const size_t& N)
     {
