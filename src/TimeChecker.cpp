@@ -1,4 +1,5 @@
 //CXX Libs
+#include <cstdint>
 #include <random>
 #include <cstddef>
 #include <random>
@@ -15,7 +16,8 @@
 
 namespace TimeChecker
 {
-    static std::random_device rd_s;
+    std::random_device rd_s;
+    uint64_t seed_s = static_cast<uint64_t>(rd_s());
 
     void FillArrayUnoptimized(const size_t& N)
     {
@@ -41,7 +43,7 @@ namespace TimeChecker
         //First OMP Block
         #pragma omp parallel
         {
-            std::mt19937 seed(rd_s() + omp_get_thread_num());
+            std::mt19937 seed(seed_s + omp_get_thread_num());
             
             #pragma omp for
             for(size_t i = 0; i < N; ++i)

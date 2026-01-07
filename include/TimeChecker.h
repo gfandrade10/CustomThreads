@@ -1,11 +1,18 @@
 #pragma once
 
-#include <fmt/base.h>
+//C++ libs
 #include <chrono>
+#include <random>
 #include <type_traits>
+
+//fmt 3rs party
+#include <fmt/base.h>
 
 namespace TimeChecker
 {
+    extern std::random_device rd_s;
+    extern uint64_t seed_s;
+
     template<typename Callable>
     fmt::enable_if_t<std::is_invocable_v<Callable, size_t>, float>
     ElapsedTime(Callable&& func, size_t NofArgs)

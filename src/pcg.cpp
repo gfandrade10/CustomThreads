@@ -13,6 +13,7 @@
 
 //my libs
 #include "pcg.h"
+#include "TimeChecker.h"
 
 void FillMultiOMPwPCG32(const size_t& N)
 {
@@ -38,7 +39,7 @@ void FillMultiOMPwPCG32(const size_t& N)
             vec[i] *= vec[i];
     }
     
-    pcg32 last_rng (seed, 10);
+    pcg32 last_rng (TimeChecker::rd_s());
     int lp = last_rng() % N;
 
     fmt::println("Element number {}: {}", lp + 1, vec[lp]);
@@ -68,7 +69,7 @@ void FillMultiOMPwXoshiro(const size_t& N)
             vec[i] *= vec[i];
     }
     
-    XoshiroCpp::Xoshiro256PlusPlus last_rng (12345);
+    XoshiroCpp::Xoshiro256PlusPlus last_rng (TimeChecker::rd_s());
     int lp = last_rng() % N;
 
     fmt::println("Element number {}: {}", lp + 1, vec[lp]);
